@@ -7,20 +7,20 @@
 
 #include "glfw_exception.h"
 
-class Window
+static class Window
 {
 private:
     GLFWwindow* window;
 public:
     void initialize(int width, int height, std::string title) throw(GlfwException);
 
-    bool should_close();
+    bool should_close() const;
 
-    void set_should_close(bool should_close);
+    void set_should_close(bool should_close) const;
 
-    void swap_and_poll();
+    void swap_and_poll() const;
 
     ~Window();
-};
+} window;
 
 #endif

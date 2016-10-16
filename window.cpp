@@ -27,17 +27,17 @@ void Window::initialize(int width, int height, std::string title) throw(GlfwExce
     glfwSetKeyCallback(this->window, key_callback);
 }
 
-bool Window::should_close()
+bool Window::should_close() const
 {
     return glfwWindowShouldClose(this->window) == GLFW_TRUE;
 }
 
-void Window::set_should_close(bool should_close)
+void Window::set_should_close(bool should_close) const
 {
     glfwSetWindowShouldClose(this->window, should_close);
 }
 
-void Window::swap_and_poll()
+void Window::swap_and_poll() const
 {
     glfwSwapBuffers(this->window);
     glfwPollEvents();

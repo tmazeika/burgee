@@ -2,21 +2,19 @@
 
 #define MS_PER_UPDATE 16
 
-void loop(Window window);
+void loop();
 void update();
 void render(double alpha);
 
 int main()
 {
-    Window window;
     window.initialize(800, 600, "Burgee");
-
-    loop(window);
+    loop();
 
     return 0;
 }
 
-void loop(Window window)
+void loop()
 {
     double previous = glfwGetTime();
     double lag = 0;
