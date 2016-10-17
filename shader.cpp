@@ -60,12 +60,28 @@ void Shader::initialize()
         glGetProgramInfoLog(this->program, 512, NULL, info_log);
         std::cout << "Error linking shader program\n" << info_log << std::endl;
     }
-
-    glDeleteShader(vert);
-    glDeleteShader(frag);
 }
 
 void Shader::use()
 {
     glUseProgram(this->program);
+}
+
+void Shader::set_vert_attrib(std::string name, GLint size, GLenum type, GLboolean normalized, GLsizei stride,
+                             const void *pointer)
+{
+    const GLuint loc = static_cast<GLuint>(glGetAttribLocation(this->program, name.c_str()));
+
+    glEnableVertexAttribArray(loc);
+    glVertexAttribPointer(loc, size, type, normalized, stride, pointer);
+}
+
+GLint Shader::get_uniform(std::string uniform)
+{
+    return glGetUniformLocation(this->program, uniform.c_str());
+}
+
+Shader::~Shader()
+{
+    glDeleteProgram(this->program);
 }

@@ -1,7 +1,9 @@
+#include <chrono>
+#include <iostream>
 #include "shader.h"
 #include "window.h"
 
-#define MS_PER_UPDATE 16
+#define S_PER_UPDATE 1.0f / 60.0f
 
 void initialize();
 void loop();
@@ -18,13 +20,13 @@ int main()
 }
 
 GLuint vbo, vao;
+Shader shader;
 
 void initialize()
 {
     glewExperimental = GL_TRUE;
     glewInit();
 
-    Shader shader;
     shader.initialize();
     shader.use();
 
@@ -32,17 +34,17 @@ void initialize()
 
     // TODO: remove
     const GLfloat vertices[] = {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.0f,  0.5f, 0.0f,
+            -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+            0.0f,  0.5f, 0.0f, 0.0f, 1.0f,
     };
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
     glBindVertexArray(vao);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
-    glEnableVertexAttribArray(0);
+    shader.set_vert_attrib("position", 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), 0);
+    shader.set_vert_attrib("color", 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*) (2 * sizeof(GLfloat)));
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
@@ -60,12 +62,12 @@ void loop()
         previous = current;
         lag += elapsed;
 
-        while (lag >= MS_PER_UPDATE) {
+        while (lag >= S_PER_UPDATE) {
             update();
-            lag -= MS_PER_UPDATE;
+            lag -= S_PER_UPDATE;
         }
 
-        render(lag / MS_PER_UPDATE);
+        render(lag / S_PER_UPDATE);
         window.swap_and_poll();
     }
 }
@@ -73,6 +75,8 @@ void loop()
 void update()
 {
     // TODO
+
+    glUniform1f(shader.get_uniform("time"), static_cast<float>(glfwGetTime()));
 }
 
 void render(double alpha)
