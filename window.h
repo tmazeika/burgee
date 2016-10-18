@@ -6,13 +6,17 @@
 #include <GLFW/glfw3.h>
 
 #include "glfw_exception.h"
+#include "input.h"
 
 static class Window
 {
 private:
     GLFWwindow* window;
+    Input input;
 public:
     void initialize(int width, int height, std::string title) throw(GlfwException);
+
+    Input get_input() const;
 
     bool should_close() const;
 

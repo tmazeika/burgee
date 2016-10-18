@@ -1,13 +1,5 @@
 #include "window.h"
 
-// TODO: probably don't want to exit instantly on ESC
-void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-    }
-}
-
 void Window::initialize(int width, int height, std::string title) throw(GlfwException)
 {
     if (!glfwInit()) {
@@ -22,9 +14,12 @@ void Window::initialize(int width, int height, std::string title) throw(GlfwExce
     }
 
     glfwMakeContextCurrent(this->window);
+    this->input.initialize(this->window);
+}
 
-    // TODO
-    glfwSetKeyCallback(this->window, key_callback);
+Input Window::get_input() const
+{
+    return this->input;
 }
 
 bool Window::should_close() const

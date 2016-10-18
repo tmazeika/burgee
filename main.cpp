@@ -1,5 +1,5 @@
-#include <chrono>
 #include <iostream>
+
 #include "shader.h"
 #include "window.h"
 
@@ -44,7 +44,7 @@ void initialize()
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     shader.set_vert_attrib("position", 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), 0);
-    shader.set_vert_attrib("color", 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*) (2 * sizeof(GLfloat)));
+    shader.set_vert_attrib("color", 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void *) (2 * sizeof(GLfloat)));
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
@@ -74,7 +74,10 @@ void loop()
 
 void update()
 {
-    // TODO
+    if (window.get_input().is_key_down(GLFW_KEY_ESCAPE)) {
+        window.set_should_close(true);
+        return;
+    }
 
     glUniform1f(shader.get_uniform("time"), static_cast<float>(glfwGetTime()));
 }
