@@ -1,14 +1,19 @@
 #include <iostream>
+#include <vector>
+#include <memory>
+#include <algorithm>
 
 #include "shader.h"
 #include "window.h"
+#include "renderable.h"
+#include "world.h"
 
 #define S_PER_UPDATE 1.0f / 60.0f
 
 void initialize();
 void loop();
 void update();
-void render(double alpha);
+void render(const float alpha);
 
 int main()
 {
@@ -19,8 +24,8 @@ int main()
     return 0;
 }
 
-GLuint vbo, vao;
 Shader shader;
+std::vector<std::shared_ptr<Renderable>> renderables;
 
 void initialize()
 {
@@ -32,21 +37,9 @@ void initialize()
 
     glClearColor(0, 0, 0, 1);
 
-    // TODO: remove
-    const GLfloat vertices[] = {
-            -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
-            0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-            0.0f,  0.5f, 0.0f, 0.0f, 1.0f,
-    };
-    glGenVertexArrays(1, &vao);
-    glGenBuffers(1, &vbo);
-    glBindVertexArray(vao);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    shader.set_vert_attrib("position", 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), 0);
-    shader.set_vert_attrib("color", 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void *) (2 * sizeof(GLfloat)));
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    const std::shared_ptr<Renderable> world_ptr = std::make_shared<World>(shader);
+
+    renderables.push_back(world_ptr);
 }
 
 void loop()
@@ -67,7 +60,7 @@ void loop()
             lag -= S_PER_UPDATE;
         }
 
-        render(lag / S_PER_UPDATE);
+        render(static_cast<float>(lag) / S_PER_UPDATE);
         window.swap_and_poll();
     }
 }
@@ -79,17 +72,17 @@ void update()
         return;
     }
 
-    glUniform1f(shader.get_uniform("time"), static_cast<float>(glfwGetTime()));
+    std::for_each(renderables.begin(), renderables.end(), [](std::shared_ptr<Renderable> renderable_ptr) {
+        renderable_ptr->update();
+    });
 }
 
-void render(double alpha)
+void render(const float alpha)
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // TODO
-
-    // TODO: remove
-    glBindVertexArray(vao);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    glBindVertexArray(0);
+    std::for_each(renderables.begin(), renderables.end(), [alpha](std::shared_ptr<Renderable> renderable_ptr) {
+        renderable_ptr->render(alpha);
+    });
 }
+

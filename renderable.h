@@ -4,7 +4,9 @@
 class Renderable
 {
 public:
-    virtual void render() const = 0;
+    virtual void update() const = 0;
+
+    virtual void render(const float alpha) const = 0;
 };
 
 #endif

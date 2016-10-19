@@ -12,12 +12,12 @@ private:
 public:
     void initialize();
 
-    void use();
+    void use() const;
 
     void set_vert_attrib(std::string name, GLint size, GLenum type, GLboolean normalized, GLsizei stride,
-                         const void *pointer);
+                         const void *pointer) const;
 
-    GLint get_uniform(std::string uniform);
+    GLint get_uniform(std::string uniform) const;
 
     ~Shader();
 };

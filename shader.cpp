@@ -62,13 +62,13 @@ void Shader::initialize()
     }
 }
 
-void Shader::use()
+void Shader::use() const
 {
     glUseProgram(this->program);
 }
 
 void Shader::set_vert_attrib(std::string name, GLint size, GLenum type, GLboolean normalized, GLsizei stride,
-                             const void *pointer)
+                             const void *pointer) const
 {
     const GLuint loc = static_cast<GLuint>(glGetAttribLocation(this->program, name.c_str()));
 
@@ -76,7 +76,7 @@ void Shader::set_vert_attrib(std::string name, GLint size, GLenum type, GLboolea
     glVertexAttribPointer(loc, size, type, normalized, stride, pointer);
 }
 
-GLint Shader::get_uniform(std::string uniform)
+GLint Shader::get_uniform(std::string uniform) const
 {
     return glGetUniformLocation(this->program, uniform.c_str());
 }
