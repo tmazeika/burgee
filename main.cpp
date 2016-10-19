@@ -4,7 +4,7 @@
 
 #define S_PER_UPDATE 1.0f / 60.0f
 
-void loop(Window, Game);
+void loop(const Window, Game);
 
 int main()
 {
@@ -23,7 +23,7 @@ int main()
     return 0;
 }
 
-void loop(Window window, Game game)
+void loop(const Window window, Game game)
 {
     double previous = glfwGetTime();
     double lag = 0;

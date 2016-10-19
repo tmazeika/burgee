@@ -15,8 +15,8 @@ void World::initialize()
 
     const float verts[] = {
             -0.75f, -0.75f, 1.0f, 0.0f, 0.0f,
-            0.0f ,  0.75f, 0.0f, 1.0f, 0.0f,
-            0.75f, -0.75f, 0.0f, 0.0f, 1.0f,
+             0.0f ,  0.75f, 0.0f, 1.0f, 0.0f,
+             0.75f, -0.75f, 0.0f, 0.0f, 1.0f,
     };
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
