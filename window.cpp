@@ -1,45 +1,52 @@
+#include <iostream>
+
 #include "window.h"
 
-void Window::initialize(int width, int height, std::string title) throw(GlfwException)
+Window::Window(int width, int height, std::string title)
+        : width(width), height(height), title(title)
 {
-    if (!glfwInit()) {
-        throw GlfwException();
-    }
-
-    this->window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
-
-    if (!this->window)
-    {
-        throw GlfwException();
-    }
-
-    glfwMakeContextCurrent(this->window);
-    this->input.initialize(this->window);
+    //
 }
 
-Input Window::get_input() const
+void Window::initialize()
 {
-    return this->input;
+    if (!glfwInit()) {
+        std::cerr << "Could not initialize GLFW" << std::endl;
+        return;
+    }
+
+    window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+
+    if (!window)
+    {
+        std::cerr << "Could not create GLFW window" << std::endl;
+        return;
+    }
+
+    glfwMakeContextCurrent(window);
+
+    input = std::make_shared<Input>(window);
+    input->register_key_callback();
+}
+
+const std::shared_ptr<Input> Window::get_input() const
+{
+    return input;
 }
 
 bool Window::should_close() const
 {
-    return glfwWindowShouldClose(this->window) == GLFW_TRUE;
-}
-
-void Window::set_should_close(bool should_close) const
-{
-    glfwSetWindowShouldClose(this->window, should_close);
+    return glfwWindowShouldClose(window) == GLFW_TRUE;
 }
 
 void Window::swap_and_poll() const
 {
-    glfwSwapBuffers(this->window);
+    glfwSwapBuffers(window);
     glfwPollEvents();
 }
 
 Window::~Window()
 {
-    glfwDestroyWindow(this->window);
+    glfwDestroyWindow(window);
     glfwTerminate();
 }

@@ -13,10 +13,13 @@ private:
 
     GLuint vao;
     GLuint vbo;
+
 public:
     World(const Shader);
 
-    void update() const override;
+    void initialize();
+
+    void update() override;
 
     void render(const float alpha) const override;
 

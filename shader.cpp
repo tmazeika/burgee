@@ -50,27 +50,27 @@ void Shader::initialize()
     const GLuint frag = compile_shader(GL_FRAGMENT_SHADER, "frag.glsl");
 
     // create and link program
-    this->program = glCreateProgram();
-    glAttachShader(this->program, vert);
-    glAttachShader(this->program, frag);
-    glLinkProgram(this->program);
-    glGetProgramiv(this->program, GL_LINK_STATUS, &success);
+    program = glCreateProgram();
+    glAttachShader(program, vert);
+    glAttachShader(program, frag);
+    glLinkProgram(program);
+    glGetProgramiv(program, GL_LINK_STATUS, &success);
 
     if (!success) {
-        glGetProgramInfoLog(this->program, 512, NULL, info_log);
+        glGetProgramInfoLog(program, 512, NULL, info_log);
         std::cout << "Error linking shader program\n" << info_log << std::endl;
     }
 }
 
 void Shader::use() const
 {
-    glUseProgram(this->program);
+    glUseProgram(program);
 }
 
 void Shader::set_vert_attrib(std::string name, GLint size, GLenum type, GLboolean normalized, GLsizei stride,
                              const void *pointer) const
 {
-    const GLuint loc = static_cast<GLuint>(glGetAttribLocation(this->program, name.c_str()));
+    const GLuint loc = static_cast<GLuint>(glGetAttribLocation(program, name.c_str()));
 
     glEnableVertexAttribArray(loc);
     glVertexAttribPointer(loc, size, type, normalized, stride, pointer);
@@ -78,10 +78,10 @@ void Shader::set_vert_attrib(std::string name, GLint size, GLenum type, GLboolea
 
 GLint Shader::get_uniform(std::string uniform) const
 {
-    return glGetUniformLocation(this->program, uniform.c_str());
+    return glGetUniformLocation(program, uniform.c_str());
 }
 
 Shader::~Shader()
 {
-    glDeleteProgram(this->program);
+    glDeleteProgram(program);
 }

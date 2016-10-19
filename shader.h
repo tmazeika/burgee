@@ -9,6 +9,7 @@ class Shader
 {
 private:
     GLuint program;
+
 public:
     void initialize();
 

@@ -2,16 +2,21 @@
 
 World::World(const Shader shader) : shader(shader)
 {
-    glGenVertexArrays(1, &this->vao);
-    glGenBuffers(1, &this->vbo);
+    //
+}
 
-    glBindVertexArray(this->vao);
-    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+void World::initialize()
+{
+    glGenVertexArrays(1, &vao);
+    glGenBuffers(1, &vbo);
+
+    glBindVertexArray(vao);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
     const float verts[] = {
             -0.75f, -0.75f, 1.0f, 0.0f, 0.0f,
-             0.0f ,  0.75f, 0.0f, 1.0f, 0.0f,
-             0.75f, -0.75f, 0.0f, 0.0f, 1.0f,
+            0.0f ,  0.75f, 0.0f, 1.0f, 0.0f,
+            0.75f, -0.75f, 0.0f, 0.0f, 1.0f,
     };
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
@@ -22,20 +27,20 @@ World::World(const Shader shader) : shader(shader)
     glBindVertexArray(0);
 }
 
-void World::update() const
+void World::update()
 {
     //
 }
 
 void World::render(const float alpha) const
 {
-    glBindVertexArray(this->vao);
+    glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 3);
     glBindVertexArray(0);
 }
 
 World::~World()
 {
-    glDeleteBuffers(1, &this->vbo);
-    glDeleteVertexArrays(1, &this->vao);
+    glDeleteBuffers(1, &vbo);
+    glDeleteVertexArrays(1, &vao);
 }

@@ -4,27 +4,32 @@
 #include <string>
 
 #include <GLFW/glfw3.h>
+#include <memory>
 
-#include "glfw_exception.h"
 #include "input.h"
 
-static class Window
+class Window
 {
 private:
-    GLFWwindow* window;
-    Input input;
-public:
-    void initialize(int width, int height, std::string title) throw(GlfwException);
+    const int width;
+    const int height;
+    const std::string title;
 
-    Input get_input() const;
+    GLFWwindow* window;
+    std::shared_ptr<Input> input;
+
+public:
+    Window(int width, int height, std::string title);
+
+    void initialize();
+
+    const std::shared_ptr<Input> get_input() const;
 
     bool should_close() const;
-
-    void set_should_close(bool should_close) const;
 
     void swap_and_poll() const;
 
     ~Window();
-} window;
+};
 
 #endif
