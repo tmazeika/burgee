@@ -1,12 +1,12 @@
 #ifndef BURGEE_GAME_H
 #define BURGEE_GAME_H
 
-#include <vector>
 #include <memory>
+#include <vector>
 
+#include "input.h"
 #include "renderable.h"
 #include "shader.h"
-#include "input.h"
 
 class Game : public Renderable
 {

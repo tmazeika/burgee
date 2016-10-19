@@ -34,7 +34,7 @@ GLuint compile_shader(GLenum shader_type, std::string shader_file_name)
 
     if (!success) {
         glGetShaderInfoLog(shader, 512, NULL, info_log);
-        std::cout << "Error compiling shader '" << shader_file_name << "'\n"
+        std::cerr << "Error compiling shader '" << shader_file_name << "'\n"
                   << info_log << std::endl;
     }
 
@@ -58,7 +58,7 @@ void Shader::initialize()
 
     if (!success) {
         glGetProgramInfoLog(program, 512, NULL, info_log);
-        std::cout << "Error linking shader program\n" << info_log << std::endl;
+        std::cerr << "Error linking shader program\n" << info_log << std::endl;
     }
 }
 

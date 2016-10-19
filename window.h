@@ -1,10 +1,10 @@
 #ifndef BURGEE_WINDOW_H
 #define BURGEE_WINDOW_H
 
+#include <memory>
 #include <string>
 
 #include <GLFW/glfw3.h>
-#include <memory>
 
 #include "input.h"
 

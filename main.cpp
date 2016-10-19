@@ -1,6 +1,7 @@
-#include "GL/glew.h"
-#include "window.h"
+#include <GL/glew.h>
+
 #include "game.h"
+#include "window.h"
 
 #define S_PER_UPDATE 1.0f / 60.0f
 
