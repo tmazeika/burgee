@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 
 #include "window.h"
 
@@ -10,17 +11,23 @@ Window::Window(int width, int height, std::string title)
 
 void Window::initialize()
 {
-    if (!glfwInit()) {
+    if (glfwInit() != GLFW_TRUE) {
         std::cerr << "Could not initialize GLFW" << std::endl;
-        return;
+        exit(EXIT_FAILURE);
     }
+
+    glfwWindowHint(GLFW_SAMPLES, 8);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
 
-    if (!window)
+    if (window == NULL)
     {
         std::cerr << "Could not create GLFW window" << std::endl;
-        return;
+        exit(EXIT_FAILURE);
     }
 
     glfwMakeContextCurrent(window);

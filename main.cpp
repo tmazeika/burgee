@@ -13,16 +13,19 @@ int main()
     Window window(800, 600, "Burgee");
     window.initialize();
 
-    // initialize GLEW
     glewExperimental = GL_TRUE;
-    glewInit();
+
+    if (glewInit() != GLEW_OK) {
+        std::cerr << "Could not initialize GLEW" << std::endl;
+        return EXIT_FAILURE;
+    }
 
     Game game(window.get_input());
     game.initialize();
 
     loop(window, game);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 void loop(const Window window, Game game)
