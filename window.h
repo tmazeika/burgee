@@ -4,8 +4,6 @@
 #include <memory>
 #include <string>
 
-#include <GLFW/glfw3.h>
-
 #include "input.h"
 
 class Window

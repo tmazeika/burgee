@@ -1,5 +1,3 @@
-#include <GL/glew.h>
-
 #include "game.h"
 #include "window.h"
 

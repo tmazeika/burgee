@@ -1,6 +1,7 @@
 #ifndef BURGEE_INPUT_H
 #define BURGEE_INPUT_H
 
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 class Input
