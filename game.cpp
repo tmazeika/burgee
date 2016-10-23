@@ -4,16 +4,14 @@
 #include "game.h"
 #include "world.h"
 
-Game::Game(const std::shared_ptr<Input> input) : input(input)
+Game::Game(const Shader shader, const std::shared_ptr<Input> input)
+        : shader(shader), input(input)
 {
     //
 }
 
 void Game::initialize()
 {
-    shader.initialize();
-    shader.use();
-
     const auto world_ptr = std::make_shared<World>(shader);
     world_ptr->initialize();
 
@@ -35,6 +33,7 @@ void Game::update()
 void Game::render(const float alpha) const
 {
     glClearColor(0, 0, 0, 1);
+    shader.use();
 
     std::for_each(game_objects.begin(), game_objects.end(), [alpha](std::shared_ptr<Renderable> renderable) {
         renderable->render(alpha);

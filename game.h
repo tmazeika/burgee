@@ -11,14 +11,14 @@
 class Game : public Renderable
 {
 private:
-    Shader shader;
+    const Shader shader;
     const std::shared_ptr<Input> input;
 
     bool close;
     std::vector<std::shared_ptr<Renderable>> game_objects;
 
 public:
-    Game(const std::shared_ptr<Input>);
+    Game(const Shader shader, const std::shared_ptr<Input>);
 
     void initialize();
 

@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <string>
+#include <glm/vec2.hpp>
 
 #include "input.h"
 
@@ -20,6 +21,8 @@ public:
     Window(int width, int height, std::string title);
 
     void initialize();
+
+    glm::vec2 get_size() const;
 
     const std::shared_ptr<Input> get_input() const;
 

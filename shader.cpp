@@ -60,6 +60,11 @@ void Shader::initialize()
         glGetProgramInfoLog(program, 512, NULL, info_log);
         std::cerr << "Error linking shader program\n" << info_log << std::endl;
     }
+
+    glDetachShader(program, vert);
+    glDetachShader(program, frag);
+    glDeleteShader(vert);
+    glDeleteShader(frag);
 }
 
 void Shader::use() const

@@ -1,4 +1,6 @@
 #include <iostream>
+#include <glm/gtx/transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "game.h"
 #include "window.h"
@@ -20,7 +22,11 @@ int main()
         return EXIT_FAILURE;
     }
 
-    Game game(window.get_input());
+    Shader shader;
+    shader.initialize();
+    shader.use();
+
+    Game game(shader, window.get_input());
     game.initialize();
 
     loop(window, game);

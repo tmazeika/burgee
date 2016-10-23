@@ -1,3 +1,5 @@
+#include <glm/glm.hpp>
+
 #include "world.h"
 
 World::World(const Shader shader) : shader(shader)

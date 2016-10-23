@@ -36,6 +36,15 @@ void Window::initialize()
     input->register_key_callback();
 }
 
+glm::vec2 Window::get_size() const
+{
+    int width, height;
+
+    glfwGetWindowSize(window, &width, &height);
+
+    return glm::vec2(width, height);
+}
+
 const std::shared_ptr<Input> Window::get_input() const
 {
     return input;
